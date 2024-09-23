@@ -1,6 +1,6 @@
 package me.blackjack.game
 
-import me.blackjack.old.rule.Rules
+import me.blackjack.rule.Rules
 import java.text.NumberFormat
 
 object Bank {

@@ -1,7 +1,7 @@
 package me.blackjack.rule
 
-import me.blackjack.old.rule.model.*
-import me.blackjack.old.rule.model.Double
+import me.blackjack.rule.model.*
+import me.blackjack.rule.model.Double
 
 object Rules {
 

@@ -1,7 +1,7 @@
 package me.blackjack.game
 
 import com.github.ajalt.mordant.rendering.TextStyle
-import me.blackjack.old.terminal.*
+import me.blackjack.terminal.*
 
 enum class CardSuit(val symbol: String, val color: TextStyle) {
     SPADES("♠", me.blackjack.terminal.rgb("AAAAAA")),
@@ -26,10 +26,10 @@ enum class CardRank(val symbol: String, val value: Int) {
     TWO("2", 2);
 }
 
-typealias Card = Pair<me.blackjack.old.game.CardSuit, me.blackjack.old.game.CardRank>
+typealias Card = Pair<me.blackjack.game.CardSuit, me.blackjack.game.CardRank>
 
-fun me.blackjack.old.game.Card.asString() = "${first.symbol}${second.symbol}"
+fun me.blackjack.game.Card.asString() = "${first.symbol}${second.symbol}"
 
-val deck = me.blackjack.old.game.CardSuit.entries.flatMap { suit ->
-    me.blackjack.old.game.CardRank.entries.map { rank -> me.blackjack.old.game.Card(suit, rank) }
+val deck = me.blackjack.game.CardSuit.entries.flatMap { suit ->
+    me.blackjack.game.CardRank.entries.map { rank -> me.blackjack.game.Card(suit, rank) }
 }

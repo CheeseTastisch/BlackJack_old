@@ -1,12 +1,12 @@
 package me.blackjack.game
 
 import kotlin.Double as KDouble
-import me.blackjack.old.rule.Rules
-import me.blackjack.old.rule.model.*
+import me.blackjack.rule.Rules
+import me.blackjack.rule.model.*
 
-open class Hand(private val _cards: MutableList<me.blackjack.old.game.Card> = mutableListOf(), private val splits: Int = 0) {
+open class Hand(private val _cards: MutableList<me.blackjack.game.Card> = mutableListOf(), private val splits: Int = 0) {
 
-    val cards: List<me.blackjack.old.game.Card> = _cards
+    val cards: List<me.blackjack.game.Card> = _cards
 
     var doubled: Boolean = false
     var surrendered: Boolean = false
@@ -16,7 +16,7 @@ open class Hand(private val _cards: MutableList<me.blackjack.old.game.Card> = mu
             var value = 0
             var aces = 0
            _cards.forEach {
-                if (it.second == me.blackjack.old.game.CardRank.ACE) aces++
+                if (it.second == me.blackjack.game.CardRank.ACE) aces++
                 value += it.second.value
             }
 
@@ -31,7 +31,7 @@ open class Hand(private val _cards: MutableList<me.blackjack.old.game.Card> = mu
         get() = splits == 0 && cards.size == 2 && value == 21
 
     val isTrippleSeven: Boolean
-        get() = splits == 0 && cards.size == 3 && cards.all { it.second == me.blackjack.old.game.CardRank.SEVEN }
+        get() = splits == 0 && cards.size == 3 && cards.all { it.second == me.blackjack.game.CardRank.SEVEN }
 
     val isBust
         get() = value > 21
@@ -46,7 +46,7 @@ open class Hand(private val _cards: MutableList<me.blackjack.old.game.Card> = mu
                 me.blackjack.rule.model.Split.ONE -> splits < 1
                 me.blackjack.rule.model.Split.TWO -> splits < 2
                 me.blackjack.rule.model.Split.ANY -> {
-                    if (cards[0].second != me.blackjack.old.game.CardRank.ACE) return true
+                    if (cards[0].second != me.blackjack.game.CardRank.ACE) return true
 
                     when (Rules.aceSplit) {
                         me.blackjack.rule.model.AceSplit.NO_SPLIT -> false
@@ -80,10 +80,10 @@ open class Hand(private val _cards: MutableList<me.blackjack.old.game.Card> = mu
 
         return when(Rules.surrender) {
             me.blackjack.rule.model.Surrender.NO -> false
-            me.blackjack.rule.model.Surrender.EARLY_NO_ACE -> !dealer.secondCardShown && dealer.firstCard.second != me.blackjack.old.game.CardRank.ACE
+            me.blackjack.rule.model.Surrender.EARLY_NO_ACE -> !dealer.secondCardShown && dealer.firstCard.second != me.blackjack.game.CardRank.ACE
             me.blackjack.rule.model.Surrender.EARLY -> !dealer.secondCardShown
             me.blackjack.rule.model.Surrender.LATE -> dealer.secondCardShown
-            me.blackjack.rule.model.Surrender.ANY_NO_ACE -> dealer.firstCard.second != me.blackjack.old.game.CardRank.ACE
+            me.blackjack.rule.model.Surrender.ANY_NO_ACE -> dealer.firstCard.second != me.blackjack.game.CardRank.ACE
             me.blackjack.rule.model.Surrender.ANY -> true
         }
     }

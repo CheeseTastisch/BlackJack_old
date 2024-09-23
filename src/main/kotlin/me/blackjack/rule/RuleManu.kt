@@ -1,7 +1,7 @@
 package me.blackjack.rule
 
 import com.github.ajalt.mordant.terminal.ConversionResult
-import me.blackjack.old.terminal.*
+import me.blackjack.terminal.*
 
 object RuleManu {
 

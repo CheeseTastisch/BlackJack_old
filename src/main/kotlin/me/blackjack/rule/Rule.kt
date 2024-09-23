@@ -1,10 +1,10 @@
 package me.blackjack.rule
 
 import com.github.ajalt.mordant.terminal.ConversionResult
-import me.blackjack.old.terminal.clear
-import me.blackjack.old.terminal.emptyLine
-import me.blackjack.old.terminal.printNice
-import me.blackjack.old.terminal.terminal
+import me.blackjack.terminal.clear
+import me.blackjack.terminal.emptyLine
+import me.blackjack.terminal.printNice
+import me.blackjack.terminal.terminal
 import kotlin.properties.ReadOnlyProperty
 import kotlin.reflect.KProperty
 

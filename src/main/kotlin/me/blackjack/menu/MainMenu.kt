@@ -1,9 +1,9 @@
 package me.blackjack.menu
 
 import com.github.ajalt.mordant.terminal.ConversionResult
-import me.blackjack.old.game.Game
-import me.blackjack.old.rule.RuleManu
-import me.blackjack.old.terminal.*
+import me.blackjack.game.Game
+import me.blackjack.rule.RuleManu
+import me.blackjack.terminal.*
 import org.apache.commons.lang3.StringUtils
 
 object MainMenu {

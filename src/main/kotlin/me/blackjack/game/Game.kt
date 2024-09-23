@@ -2,7 +2,7 @@ package me.blackjack.game
 
 import com.github.ajalt.colormath.model.RGB
 import com.github.ajalt.mordant.rendering.TextStyle
-import me.blackjack.old.terminal.*
+import me.blackjack.terminal.*
 
 class Game {
 
@@ -10,7 +10,7 @@ class Game {
     private val playersHands = mutableListOf<Hand>()
 
     fun setup() {
-        me.blackjack.old.game.Bank.reset()
+        me.blackjack.game.Bank.reset()
         Deck.shuffle()
 
         terminal.printNice(listOf("Welcome to Blackjack!", "", "Shuffling deck...", "", "Press enter to start."))
@@ -23,18 +23,18 @@ class Game {
                 readln()
             }
 
-            if (me.blackjack.old.game.Bank.capital == 0) {
+            if (me.blackjack.game.Bank.capital == 0) {
                 terminal.printNice(listOf("You have no money left.", "", "Press enter to quit."))
                 readln()
                 return
             }
 
-            if (me.blackjack.old.game.Bank.capital < me.blackjack.old.game.Bank.stake) me.blackjack.old.game.Bank.stake = me.blackjack.old.game.Bank.capital
+            if (me.blackjack.game.Bank.capital < me.blackjack.game.Bank.stake) me.blackjack.game.Bank.stake = me.blackjack.game.Bank.capital
 
             terminal.printNice(
                 listOf(
-                    "Your current balance is ${me.blackjack.old.game.Bank.capitalString}.",
-                    "Current bet is ${me.blackjack.old.game.Bank.stakeString}.",
+                    "Your current balance is ${me.blackjack.game.Bank.capitalString}.",
+                    "Current bet is ${me.blackjack.game.Bank.stakeString}.",
                     "",
                     "Enter a new bet, press enter to start the game or enter 'q' to quit."
                 )
@@ -44,19 +44,19 @@ class Game {
 
             val newBet = result.toIntOrNull()
             if (newBet != null) {
-                if (newBet > me.blackjack.old.game.Bank.availableCapital) {
+                if (newBet > me.blackjack.game.Bank.availableCapital) {
                     terminal.printNice(listOf("You don't have enough money.", "", "Press enter to continue."))
                     readln()
                     continue
                 }
 
-                me.blackjack.old.game.Bank.stake = newBet
+                me.blackjack.game.Bank.stake = newBet
             } else start()
         }
     }
 
     private fun start() {
-        me.blackjack.old.game.Bank.onHold += me.blackjack.old.game.Bank.stake
+        me.blackjack.game.Bank.onHold += me.blackjack.game.Bank.stake
 
         playersHands.clear()
 
@@ -94,8 +94,8 @@ class Game {
 
             val actions = mutableListOf(PlayerAction.HIT, PlayerAction.STAND)
 
-            if (hand.canDouble && me.blackjack.old.game.Bank.availableCapital >= me.blackjack.old.game.Bank.stake) actions.add(PlayerAction.DOUBLE)
-            if (hand.canSplit && me.blackjack.old.game.Bank.availableCapital >= me.blackjack.old.game.Bank.stake) actions.add(PlayerAction.SPLIT)
+            if (hand.canDouble && me.blackjack.game.Bank.availableCapital >= me.blackjack.game.Bank.stake) actions.add(PlayerAction.DOUBLE)
+            if (hand.canSplit && me.blackjack.game.Bank.availableCapital >= me.blackjack.game.Bank.stake) actions.add(PlayerAction.SPLIT)
             if (hand.canSurrender(dealerHand)) actions.add(PlayerAction.SURRENDER)
 
 
@@ -118,14 +118,14 @@ class Game {
                 PlayerAction.DOUBLE -> {
                     hand.hit()
                     hand.doubled = true
-                    me.blackjack.old.game.Bank.onHold += me.blackjack.old.game.Bank.stake
+                    me.blackjack.game.Bank.onHold += me.blackjack.game.Bank.stake
                 }
 
                 PlayerAction.SPLIT -> {
                     val (first, second) = hand.split()
                     playersHands[currentHand] = first
                     playersHands.add(currentHand + 1, second)
-                    me.blackjack.old.game.Bank.onHold += me.blackjack.old.game.Bank.stake
+                    me.blackjack.game.Bank.onHold += me.blackjack.game.Bank.stake
                 }
 
                 PlayerAction.SURRENDER -> hand.surrendered = true
@@ -194,7 +194,7 @@ class Game {
             generalInformation = "Press enter to continue."
         )
         readln()
-        me.blackjack.old.game.Bank.onHold = 0
+        me.blackjack.game.Bank.onHold = 0
     }
 
     private fun printHands(
@@ -277,7 +277,7 @@ class Game {
         val winLoseContent = buildString {
             if (withWinLose) {
                 val payout = hand.getPayout(dealerHand)
-                val string = me.blackjack.old.game.Bank.gameOver(payout)
+                val string = me.blackjack.game.Bank.gameOver(payout)
                 when {
                     payout > 0 -> append(me.blackjack.terminal.rgb("#aaffaa")(" Won $string"))
                     payout < 0 -> append(me.blackjack.terminal.rgb("#ffaaaaaa")(" Lost $string"))
